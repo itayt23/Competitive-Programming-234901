@@ -59,7 +59,6 @@ int main() {
         count_shots = 3;
     }
     else if (n <= 120) {
-        num1 = 20; num2 = 20; num3 = n - 100;
         out.push_back("triple 20");
         out.push_back("double 20");
         out.push_back("single " + to_string(n - 100));
