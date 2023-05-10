@@ -21,14 +21,12 @@ typedef vector<int> vi;
 typedef pair<int, int> pii;
 
 
-
 int main() {
     int m, n, c = 0, t, u;
     cin >> m >> n;
     int* A = new int[m];
     priority_queue<int, vector<int>, greater<int>> min_heap;
-    priority_queue<int, vector<int>, less<int>> max_heap;
-    // priority_queue<int, vector<int>> max_heap;
+    priority_queue<int, vector<int>> max_heap;
 
     for (int i = 0; i < m; i++) {
         cin >> A[i];
