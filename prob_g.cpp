@@ -1,88 +1,75 @@
+#include <algorithm>
+#include <bitset>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <deque>
+#include <functional>
 #include <iostream>
+#include <map>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
 #include <vector>
+#include <numeric>
+#include <iomanip>
+#include <climits>
 
 using namespace std;
 typedef long long ll;
+typedef unsigned long long ull;
+typedef vector<int> vi;
+typedef pair<int, int> pii;
 
-vector<ll> vectorMul(vector<ll> &vec1, vector<ll> &vec2, int mod) {
-    int N = vec1.size();
-    vector<ll> res(N, 0);
+const int MAXN = 1000;
 
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            res[i] = (res[i] + vec1[j] * vec2[(i + N - j) % N]) % mod;
-        }
-    }
-    return res;
-}
+void mul_circulant(ll x[], ll out_mat[], int n, ll m) {
+  ll mul_res[MAXN];
 
-vector<ll>& setCoefficients(int S, int mod, vector<ll> &firstIter, vector<ll> &midRes, vector<ll> &marker) {
-    if (S == 1) {
-        return firstIter;
-    }
-    if (S == 0) {
-        int size = firstIter.size();
-        midRes = vector<ll>(size, 0);
-        midRes[0] = 1;
-        return midRes;
-    }
+  for (int i = 0; i < n; i++) {
+    ll sum = 0;
+    for (int j = 0; j <= i; j++)
+      sum += x[j] * out_mat[i - j];
+    for (int j = i + 1; j < n; j++)
+      sum += x[j] * out_mat[i - j + n];
+    mul_res[i] = sum;
+  }
 
-    midRes = setCoefficients(S / 2, mod, firstIter, midRes, marker);
-
-    int size = firstIter.size();
-    marker = vector<ll>(size, 0);
-    marker[0] = 1;
-
-    marker = vectorMul(midRes, midRes, mod);
-
-    if (S % 2 == 1) { // Case we need to multiply again
-        midRes = vectorMul(marker, firstIter, mod);
-        return midRes;
-    }
-
-    return marker;
-}
-
-unsigned GetNumberOfDigits(ll x) {
-    int digits = 1;
-    for (int i = 0; i < x; i++) {
-        digits *= 10;
-    }
-    return digits;
+  for (int i = 0; i < n; i++) {
+    if (mul_res[i] >= m) mul_res[i] %= m;
+    out_mat[i] = mul_res[i];
+  }
 }
 
 int main() {
-    int TC;
-    cin >> TC;
-    while (TC--) {
-        ll N, S, L, R, X;
-        cin >> N >> S >> L >> R >> X;
-        vector<ll> message(N), coeffs(N, 0);
-        for (int i = 0; i < N; i++) {
-            int enc;
-            cin >> enc;
-            message[i] = enc;
-        }
-            int mod = GetNumberOfDigits(X);
-
-            vector<ll> firstIter(N, 0);
-            firstIter[0] = 1;
-            firstIter[N - 1] = L;
-            firstIter[1] = R;
-            vector<ll> midIter, marker;
-
-            coeffs = setCoefficients(S, mod, firstIter, midIter, marker);
-            vector<ll> output(N, 0);
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
-                    output[i] = (output[i] + message[j]*coeffs[(j+N-i)%N]) % mod;
-                }
-                cout << output[i];
-                if (i<N-1) {
-                    cout << " ";
-                }
-            }
-            cout << endl;
+  int cases;
+  cin >> cases;
+  while (cases--) {
+    int n, s_times, l, r, x;
+    ll m = 1;
+    ll enc[MAXN];
+    ll circulant_matrix[MAXN];  // circulant matrix
+    cin >> n >> s_times >> l >> r >> x;
+    for (int i = 0; i < x; i++) m = m * 10;
+    for (int i = 0; i < n; i++) {
+      cin >> enc[i];
+      enc[i] %= m;
     }
-    return 0;
+    for (auto &element : circulant_matrix) {
+      element = 0;
+    }
+    circulant_matrix[0] = 1, circulant_matrix[1] = l, circulant_matrix[n - 1] = r;
+    while (s_times) {
+        if (s_times % 2 == 1) mul_circulant(circulant_matrix, enc, n, m);
+        mul_circulant(circulant_matrix, circulant_matrix, n, m);
+        s_times /= 2;
+    }
+    for (int i = 0; i < n-1; i++){
+      cout << enc[i] << " ";
+    } 
+    cout << enc[n-1] << endl;
+  }
+  return 0;
 }
