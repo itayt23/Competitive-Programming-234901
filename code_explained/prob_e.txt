@@ -1,0 +1,26 @@
+The ternary_search function performs ternary search to find the minimum value of t that results in the minimum distance covering all vehicles. 
+It initializes the search range and iteratively narrows it down by evaluating the function max_min_func at two intermediate points. 
+The search continues for a fixed number of iterations to ensure sufficient precision.
+
+In this case, the loop iterates 100 times to ensure sufficient precision in finding the minimum distance.
+Each iteration calculates two intermediate points (mid1 and mid2) within the current search range and compares the distances obtained by evaluating the max_min_func function at these points. 
+
+By repeating this process 100 times, the search range becomes significantly smaller, 
+increasing the likelihood of finding a more accurate value for the minimum distance that covers all vehicles.
+
+
+the aim of the function 'max_min_func':
+The loop iterates over each vehicle in the input vector A using the index variable i.
+For the current vehicle at index i, the position at time t is calculated by adding the product of its velocity and time to its initial position (A[i].first + A[i].second * t).
+The calculated position is then compared with the current minimum and maximum positions (min_pos and max_pos).
+If the calculated position is smaller than the current minimum position (pos < min_pos), the minimum position is updated (min_pos = pos).
+If the calculated position is greater than the current maximum position (pos > max_pos), the maximum position is updated (max_pos = pos).
+The loop continues to the next vehicle until all vehicles have been processed.
+Finally, the function returns the difference between the maximum and minimum positions, representing the distance covered by all the vehicles at time t.
+
+By applying the ternary search algorithm, we iteratively narrowed down the search range and approximated the time at which the vehicles are closest to each other. 
+The final value of left obtained after the loop represents this specific time.
+
+eventually max_min_func(A, left); solved my problem because its calculates the distance covered by the vehicles at the specific time left,
+which represents the minimum distance they get closest to each other.
+returns the minimum distance that the vehicles will get closest to each other, effectively solving the problem.

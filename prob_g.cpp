@@ -50,7 +50,7 @@ int main() {
     int n, s_times, l, r, x;
     ll m = 1;
     ll enc[MAXN];
-    ll circulant_matrix[MAXN];  // circulant matrix
+    ll circulant_matrix[MAXN]; 
     cin >> n >> s_times >> l >> r >> x;
     for (int i = 0; i < x; i++) m = m * 10;
     for (int i = 0; i < n; i++) {

@@ -23,6 +23,8 @@ typedef unsigned long long ull;
 typedef vector<int> vi;  
 typedef pair<int, int> pii;
 
+#define TERNARY_SEARCH_PERCISION 200
+
 double max_min_func(vector<pair<int, int>> &A, double t) {
   double min_pos = INT_MAX;
   double max_pos = INT_MIN;
@@ -36,7 +38,7 @@ double max_min_func(vector<pair<int, int>> &A, double t) {
 
 double ternary_search(vector<pair<int, int>> &A) {
   double left = 0, right = 1e9;
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < TERNARY_SEARCH_PERCISION; i++) {
     double mid1 = left + (right - left) / 3;
     double mid2 = right - (right - left) / 3;
     if (max_min_func(A, mid1) < max_min_func(A, mid2)) {
