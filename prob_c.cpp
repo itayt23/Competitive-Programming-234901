@@ -22,7 +22,7 @@ typedef pair<int, int> pii;
 
 
 int main() {
-    int m, n, c = 0, t, u;
+    int m, n, counter = 0, temp_switch, u;
     cin >> m >> n;
     int* A = new int[m];
     priority_queue<int, vector<int>, greater<int>> min_heap;
@@ -34,16 +34,16 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         cin >> u;
-        while (c < u) {
-            min_heap.push(A[c]);
+        while (counter < u) {
+            min_heap.push(A[counter]);
             if (!max_heap.empty() && min_heap.top() < max_heap.top()) {
-                t = min_heap.top();
+                temp_switch = min_heap.top();
                 min_heap.pop();
                 min_heap.push(max_heap.top());
                 max_heap.pop();
-                max_heap.push(t);
+                max_heap.push(temp_switch);
             }
-            c++;
+            counter++;
         }
         if (!min_heap.empty()) {  
             cout << min_heap.top() <<endl;

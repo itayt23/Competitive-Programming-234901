@@ -1,0 +1,5 @@
+In the begining i tried to solve this problem by just one min_heap, but i encountered time limit exceed problem.
+Hence i understand that i have to use 2 priority_queues.
+min_heap and max_heap
+In the min_heap im inserting always the ADD operation, the use of the max_heap is to throw there all the i-th MINIMUM number transaction we already added to the min heap
+that way, im always taking care that the head of the min_heap will contain the minimun i-th transiction.   
