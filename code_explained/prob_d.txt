@@ -1,40 +1,14 @@
-20: This is the maximum score for a single section on the dartboard. If the target score is less than or equal to 20, it can be achieved with a single throw.
+I stared by consider different scenarios based on the value of the target score and constructs the required shots accordingly.
+Im starting with checking the simple solution for the target score.
+If-else statment for target score until:
+-20
+-40
+-60
+-80
+-100
+-120
+-140
+-160
 
-40: This represents the maximum score achievable with two throws of 20 each. If the target score is less than or equal to 40, it can be achieved with a throw of 20 and another single throw.
-
-60: This represents the maximum score achievable with three throws of 20 each. If the target score is less than or equal to 60, it can be achieved with two throws of 20 and another single throw.
-
-80: This represents the maximum score achievable with a triple throw of 20 and a single throw. If the target score is less than or equal to 80, it can be achieved with a triple throw of 20 and another single throw.
-
-100: This represents the maximum score achievable with a triple throw of 20, a single throw of 20, and another single throw. If the target score is less than or equal to 100, it can be achieved with a triple throw of 20, a single throw of 20, and another single throw.
-
-120: This represents the maximum score achievable with a triple throw of 20, a double throw of 20, and a single throw. If the target score is less than or equal to 120, it can be achieved with a triple throw of 20, a double throw of 20, and another single throw.
-
-140: This represents the maximum score achievable with two triple throws of 20 and a single throw. If the target score is less than or equal to 140, it can be achieved with two triple throws of 20 and another single throw.
-
-160: This represents the maximum score achievable with two triple throws of 20 and a double throw. If the target score is less than or equal to 160, it can be achieved with two triple throws of 20, a double throw, and another single throw.
-    First, it checks if the remaining score after subtracting 120 is divisible by 3. If so, it means the remaining score can be achieved by throwing triples of a specific section value. The code adds two "triple 20" throws to the out vector and adds a "triple" throw with the remaining score divided by 3.
-
-If the remaining score is not divisible by 3 and the target score is an odd number, the code checks if the remaining score after subtracting 117 is divisible by 2. If so, it means the remaining score can be achieved by throwing a combination of triple 20, triple 19, and double throws. The code adds a "triple 20" throw, a "triple 19" throw, and a "double" throw with the remaining score divided by 2.
-
-If neither of the above conditions is satisfied, it means the remaining score cannot be achieved within the given constraints of three throws. The code sets count_shots to 4 to indicate that it's not possible to achieve the target score within three throws.
-
-By considering these specific target score ranges, your code handles different scenarios and determines the appropriate dart throws to achieve the target score within the given constraints.
-
-
-about 180:
-The code uses three nested loops to iterate over possible dart throw combinations. The loops iterate in reverse order, starting from 20 and going down to 1. This allows the code to prioritize higher-valued sections.
-
-The first loop is responsible for triple throws. It checks if the remaining score (n) is greater than or equal to three times the current section value (i). If so, it adds a "triple" throw with the score i to the out vector and subtracts three times i from the remaining score (n).
-
-The second loop is responsible for double throws. It checks if the remaining score (n) is greater than or equal to twice the current section value (i). If so, it adds a "double" throw with the score i to the out vector and subtracts twice i from the remaining score (n).
-
-The third loop is responsible for single throws. It checks if the remaining score (n) is greater than or equal to the current section value (i). If so, it adds a "single" throw with the score i to the out vector and subtracts i from the remaining score (n).
-
-After the loops, the code checks if the remaining score (n) is zero, indicating that the target score has been achieved using at most three throws. It also checks if the number of throws added to the out vector is greater than three, which is not allowed.
-
-If the remaining score is not zero or the number of throws is greater than three, it means the target score cannot be achieved within the given constraints. In this case, the code outputs "impossible".
-
-If the remaining score is zero and the number of throws is at most three, it means the target score has been achieved successfully. The code then outputs the dart throws stored in the out vector.
-
-By iterating over possible dart throw combinations and checking the remaining score, your code finds valid dart throws to achieve the target score up to 180.
+If the target score is above 160 than, i check with a while loop all the possible option in a way that im always trying to take as many triple shot, then double and lastly single shots. 
+If a valid combination of shots is not possible to reach the target score, im outputs "impossible". 

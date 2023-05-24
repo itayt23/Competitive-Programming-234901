@@ -1,0 +1,5 @@
+For Solving this problem, I buld an adjacent matrix the initialized to 'inf'. the aim of the matrix is for the connection of every 2 pepole.
+For every 2 pepole, the first person connect to the second and vice versa.
+After the matrix is build fully, to get the maximum degree of separation I run on the adjacent matrix Floyd–Warshall algorithm.
+Now, I can run over my matrix and check what is the max degree between the shortest ath I got from floyd.
+Its importent to remember that if I found a path that equal to ind its mean the network is disconnected.

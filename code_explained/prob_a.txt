@@ -1,10 +1,5 @@
-The compare_weights function is defined to compare two pairs containing the weight and the number of cuts for each vegetable. 
-It calculates the ratio of weight to the number of cuts for each pair and returns true 
-if the ratio of the first pair is smaller than the ratio of the second pair.
-
-By using the max_element and min_element functions with the compare_weights comparison function, you can find the vegetable with the maximum ratio
-and the vegetable with the minimum ratio (min_it) in the pieces vector. 
-These iterators allow you to access the specific elements and their associated weights and cut counts.
-
-Then Once you have obtained max_it and min_it, you use them to calculate the current ratios (max_val and min_val) 
-by dividing the weight of each vegetable by its corresponding number of cuts.
+My code essentially implements a greedy algorithm. Im repeatedly selecting the piece with the maximum ratio (weight divided by the number of cuts)
+and the piece with the minimum ratio.
+After that Im increaseing the number of cuts for the maximum ratio piece.
+IM doing it to ensures that the ratios get closer to each other, eventually reaching a point where the current ratio is greater than or equal to the threshold ratio.
+The total number of cuts performed is then outputted as the solution to the problem.

@@ -26,7 +26,7 @@ typedef vector<vi> vvi;
 
 #define inf 1000000000
 
-int get_index(vector<string>& names, string& name) {
+int get_index_of_name(vector<string>& names, string& name) {
     for (int i = 0; i < names.size(); i++) {
         if (names[i] == name) {
             return i;
@@ -36,10 +36,11 @@ int get_index(vector<string>& names, string& name) {
     return names.size() - 1;
 }
 
-void floyd(vvi& adj_mat, int numVertices) {
-    for (int k = 0; k < numVertices; k++) {
-        for (int i = 0; i < numVertices; i++) {
-            for (int j = 0; j < numVertices; j++) {
+
+void floyd(vvi& adj_mat, int v) {
+    for (int k = 0; k < v; k++) {
+        for (int i = 0; i < v; i++) {
+            for (int j = 0; j < v; j++) {
                 adj_mat[i][j] = min(adj_mat[i][j], adj_mat[i][k] + adj_mat[k][j]);
             }
         }
@@ -47,37 +48,40 @@ void floyd(vvi& adj_mat, int numVertices) {
 }
 
 int main() {
-    int n, r, tc = 1;
-    while (cin >> n >> r && (n || r)) {
+    int p, r, network_num = 1;
+    cin >> p >> r;
+    while (p || r) {
         vector<string> names;
-        vvi adj_mat(n, vi(n, inf));
+        vvi adj_mat(p, vi(p, inf));
         for (int i = 0; i < r; i++) {
-            string a, b;
-            cin >> a >> b;
-            int aa = get_index(names, a), bb = get_index(names, b);
-            adj_mat[aa][bb] = adj_mat[bb][aa] = 1;
+            string name_1, name_2;
+            cin >> name_1 >> name_2;
+            int name_1_index = get_index_of_name(names, name_1);
+            int name_2_index = get_index_of_name(names, name_2);
+            adj_mat[name_1_index][name_2_index] = adj_mat[name_2_index][name_1_index] = 1;
         }
-        floyd(adj_mat, n);
-        bool poss = true;
-        int mx = -inf;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        floyd(adj_mat, p);
+        bool disconnected = false;
+        int max_degree = -inf;
+        for (int i = 0; i < p; i++) {
+            for (int j = 0; j < p; j++) {
                 if (i == j) continue;
                 if (adj_mat[i][j] == inf) {
-                    poss = false;
+                    disconnected = true;
                     break;
                 }
-                mx = max(mx, adj_mat[i][j]);
+                max_degree = max(max_degree, adj_mat[i][j]);
             }
-            if (!poss) break;
+            if (disconnected) break;
         }
-        cout << "Network " << tc++ << ": ";
-        if (poss) {
-            cout << mx << endl;
-        } else {
+        cout << "Network " << network_num++ << ": ";
+        if (disconnected) {
             cout << "DISCONNECTED\n";
+        } else {
+            cout << max_degree << endl;
         }
         cout << endl;
+        cin >> p >> r;
     }
     return 0;
 }
