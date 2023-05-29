@@ -14,6 +14,7 @@
 #include <string> 
 #include <vector>  
 #include <numeric>  
+#include <cfloat>
 
 using namespace std;
 typedef long long ll;
@@ -21,12 +22,11 @@ typedef unsigned long long ull;
 typedef vector<int> vi;  
 typedef pair<int, int> pii;
 
-#define inf 1000000000
-
 struct Point {
     double x, y;
 };
 
+//the signed area of the parallelogram formed by the vectors p1p2 and p1p3
 double cross_product(const Point& p1, const Point& p2, const Point& p3) {
     return (p2.x - p1.x) * (p3.y - p1.y) - (p3.x - p1.x) * (p2.y - p1.y);
 }
@@ -41,36 +41,41 @@ double point_to_line_distance(const Point& p, const Point& l1, const Point& l2) 
     return abs(cross_product(l1, l2, p)) / distance(l1, l2);
 }
 
-double max_dis_to_line(const vector<Point>& points, const Point& l1, const Point& l2) {
-    double max_size = 0.0;
-    for (int i = 0; i < points.size(); i++) {
-        double dist = point_to_line_distance(points[i], l1, l2);
-        if (dist > max_size) {
-            max_size = dist;
-        }
-    }
-    return max_size;
-}
 double find_min_distance(const vector<Point>& points) {
-    int sides = points.size();
+    int n = points.size();
+
+    // Find the leftmost point (p0) to start the convex hull algorithm
     int p0 = 0;
-    for (int i = 1; i < sides; i++) {
+    for (int i = 1; i < n; i++) {
         if (points[i].x < points[p0].x || (points[i].x == points[p0].x && points[i].y < points[p0].y)) {
             p0 = i;
         }
     }
 
-    double min_slot_size = inf;
-    int check_sides = sides;
+    double min_slot_size = DBL_MAX;
     int cur = p0;
-    int next = (cur + 1) % sides;
-    double max_size = 0.0;
-    while(check_sides--){
-        max_size = max_dis_to_line(points, points[cur], points[next]);
-        if (max_size < min_slot_size) min_slot_size = max_size;
+    int next;
+
+    do {
+        next = (cur + 1) % n;
+
+        // Find the point with the maximum distance from the line formed by cur and next points
+        double max_size = 0.0;
+        for (int i = 0; i < n; i++) {
+            if (i != cur && i != next) {
+                double dist = point_to_line_distance(points[i], points[cur], points[next]);
+                if (dist > max_size) {
+                    max_size = dist;
+                }
+            }
+        }
+
+        if (max_size < min_slot_size) {
+            min_slot_size = max_size;
+        }
+
         cur = next;
-        next = (cur + 1) % sides;
-    }
+    } while (cur != p0);
 
     return min_slot_size;
 }

@@ -13,6 +13,7 @@
         "ostream": "cpp",
         "string": "cpp",
         "iomanip": "cpp",
-        "xstddef": "cpp"
+        "xstddef": "cpp",
+        "ratio": "cpp"
     }
 }

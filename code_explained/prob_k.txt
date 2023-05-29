@@ -1,0 +1,4 @@
+As we learned in class I have tried to use the concept of the convex hull to find the minimum distance from a given set of points,
+to any side of the convex polygon formed by those points.
+Im iterating over all sides of the polygon, computing the maximum distance for each side, and keeps track of the minimum distance encountered.
+The minimum slot size, is the largest gap between the points and any side of the polygon.

@@ -2,32 +2,50 @@
 #include <vector>
 #include <queue>
 #include <limits>
+#include <algorithm>
+#include <bitset> 
+#include <cmath>  
+#include <cstdio>  
+#include <cstdlib>  
+#include <cstring>  
+#include <deque>  
+#include <functional>
+#include <iostream>  
+#include <map>  
+#include <queue>  
+#include <set>  
+#include <stack>  
+#include <string> 
+#include <vector>  
+#include <numeric>  
+#include <iomanip>
+#include <climits>
 
 using namespace std;
 
-typedef pair<int, int> ii;
+typedef pair<int, int> pii;
 typedef vector<int> vi;
-typedef vector<ii> vii;
+typedef vector<pii> vii;
 typedef vector<vii> vvii;
 
-const int INF = numeric_limits<int>::max();
+#define inf 1000000000
 
-void Dijkstra(const vvii& g, int s, vi& dist, vi& ways) {
-    dist = vi(g.size(), INF);
+void dijkstra(const vvii& g, int s, vi& dist, vi& ways) {
+    dist = vi(g.size(), inf);
     ways = vi(g.size(), 0);
     dist[s] = 0;
     ways[s] = 1;
-    priority_queue<ii, vii, greater<ii>> q;
+    priority_queue<pii, vii, greater<pii>> q;
     q.push({0, s});
 
     while (!q.empty()) {
-        ii front = q.top();
+        pii front = q.top();
         q.pop();
 
         int d = front.first, u = front.second;
         if (d > dist[u]) continue;
 
-        for (ii next : g[u]) {
+        for (pii next : g[u]) {
             int v = next.first, w = next.second;
             if (dist[u] + w < dist[v]) {
                 dist[v] = dist[u] + w;
@@ -56,7 +74,7 @@ int main() {
     cin >> start >> end;
 
     vi dist, ways;
-    Dijkstra(adj, start, dist, ways);
+    dijkstra(adj, start, dist, ways);
 
     cout << ways[end] << endl;
 

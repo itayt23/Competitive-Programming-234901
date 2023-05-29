@@ -1,4 +1,3 @@
-The code implements Dijkstra's algorithm, a graph traversal algorithm, to find the shortest paths from a given source vertex to all other vertices
+The solution is simply using Dijkstra's algorithm, to find the shortest paths from a given source vertex to all other vertices
 in a weighted graph.
-The algorithm determines the shortest distances and counts of shortest paths for each vertex. 
-Finally, it outputs the count of shortest paths from the source to the destination vertex.
+Finally, as required I outputs the count of shortest paths from the source to the destination vertex.
