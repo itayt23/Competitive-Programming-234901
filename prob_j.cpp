@@ -22,8 +22,8 @@ typedef vector<int> vi;
 typedef pair<int, int> pii;
 
 #define inf 1000000000
-
-using namespace std;
+#define PI 3.14159265358979323846
+#define EPS 1e-2
 
  
 struct Point {
@@ -40,22 +40,19 @@ struct Point {
 struct Instruction {
     string cmd;
     int arg;
+    int size;
 };
 
 Point rotate_counter_clock(Point p,double ang)
 {
     return Point(p.x*cos(ang) - p.y*sin(ang) , p.x*sin(ang) + p.y * cos(ang));
 }
-#define PI 3.14159265358979323846
-#define EPS 1e-2
 
-int commands;
- 
 Point apply_instructions(Instruction* instruction,Point& previous_direction,int exclude_index= -1)
 {
     Point pivot = Point(0,0);
     Point direction = Point(1,0);
-    for(int i = 0; i < commands ; i ++ ) {
+    for(int i = 0; i < instruction->size ; i ++ ) {
         if(i==exclude_index) {
             previous_direction= direction;
             continue;
@@ -79,6 +76,7 @@ Point apply_instructions(Instruction* instruction,Point& previous_direction,int 
  
 int main()
 {
+    int commands;
     Point previous_direction;
     int test_cases, find_index;
     cin >> test_cases;
@@ -86,18 +84,15 @@ int main()
         cin >> commands;
         find_index = 0;
         Instruction instructions[1005];
+        instructions->size = commands;
         for (int i = 0; i < commands; i++){
-            string cmd,arg;
-            cin >> cmd >> arg;
+            string arg;
+            cin >> instructions[i].cmd >> arg;
             if(arg.compare("?") == 0) {
                 find_index = i;
                 instructions[i].arg = 0;
-                instructions[i].cmd = cmd;
             }
-            else{
-                instructions[i].arg =  atoi(arg.c_str());
-                instructions[i].cmd = cmd;
-            }
+            else{instructions[i].arg =  atoi(arg.c_str());}
         }
         if(instructions[find_index].cmd.compare("fd") == 0 || instructions[find_index].cmd.compare("bk") == 0) {
             Point final_position = apply_instructions(instructions,previous_direction,find_index);
