@@ -14,6 +14,9 @@
         "string": "cpp",
         "iomanip": "cpp",
         "xstddef": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "ios": "cpp",
+        "algorithm": "cpp",
+        "locale": "cpp"
     }
 }

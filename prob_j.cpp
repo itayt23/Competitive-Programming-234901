@@ -1,89 +1,119 @@
-#include <stdio.h>
-#include <math.h>
+#include <algorithm>
+#include <bitset> 
+#include <cmath>  
+#include <cstdio>  
+#include <cstdlib>  
+#include <cstring>  
+#include <deque>  
+#include <functional>
+#include <iostream>  
+#include <map>  
+#include <queue>  
+#include <set>  
+#include <stack>  
+#include <string> 
+#include <vector>  
+#include <numeric>  
 
-int main() {
-    int t, n;
-    scanf("%d", &t);
-    while(t--) {
-        scanf("%d", &n);
-        double px = 0, py = 0;
-        double qx = 0, qy = 0;
-        double theta = 0;
-        double pi = acos(-1);
-        char cmd[1000][10], arg[1000][10];
-        int qqcmd = -1, qflag = 0, argv;
-        int i, j;
-        for(i = 0; i < n; i++) {
-            scanf("%s %s", cmd[i], arg[i]);
-            if(arg[i][0] == '?') {
-                if(cmd[i][0] == 'l')       qqcmd = 0;
-                else if(cmd[i][0] == 'r')  qqcmd = 1;
-                else if(cmd[i][0] == 'f')  qqcmd = 2;
-                else                       qqcmd = 3;
-                qflag = 1;
-                theta = 0;
-                continue;
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;  
+typedef vector<int> vi;  
+typedef pair<int, int> pii;
+
+#define inf 1000000000
+
+using namespace std;
+
+ 
+struct Point {
+    double x,y;
+    Point(){}
+    Point(double x,double y):x(x),y(y){}
+    Point operator + (const Point &p) const {return Point(x+p.x,y+p.y);}
+    Point operator - (const Point &p) const {return Point(x-p.x,y-p.y);}
+    Point operator * (double c) const { return Point(x*c, y *c);}
+    Point operator / (double c) const { return Point(x/c, y /c);}
+    double norm(){return sqrt(x*x+y*y);}
+};
+
+struct Instruction {
+    string cmd;
+    int arg;
+};
+
+Point rotate_counter_clock(Point p,double ang)
+{
+    return Point(p.x*cos(ang) - p.y*sin(ang) , p.x*sin(ang) + p.y * cos(ang));
+}
+#define PI 3.14159265358979323846
+#define EPS 1e-2
+
+int commands;
+ 
+Point apply_instructions(Instruction* instruction,Point& previous_direction,int exclude_index= -1)
+{
+    Point pivot = Point(0,0);
+    Point direction = Point(1,0);
+    for(int i = 0; i < commands ; i ++ ) {
+        if(i==exclude_index) {
+            previous_direction= direction;
+            continue;
+        }
+        string cmd = instruction[i].cmd;
+        double size = instruction[i].arg;
+        if(cmd.compare("fd")== 0) pivot = pivot + direction * size;
+        if(cmd.compare("bk")== 0) pivot = pivot - direction * size;
+        if(cmd.compare("lt")== 0) {
+            size = PI * size / 180;
+            direction = rotate_counter_clock(direction,size);
+        } 
+        if(cmd.compare("rt")== 0){
+            size = PI * size / 180;
+            direction = rotate_counter_clock(direction,-size);
+        } 
+    }
+    return pivot;
+}
+ 
+ 
+int main()
+{
+    Point previous_direction;
+    int test_cases, find_index;
+    cin >> test_cases;
+    while(test_cases--) {
+        cin >> commands;
+        find_index = 0;
+        Instruction instructions[1005];
+        for (int i = 0; i < commands; i++){
+            string cmd,arg;
+            cin >> cmd >> arg;
+            if(arg.compare("?") == 0) {
+                find_index = i;
+                instructions[i].arg = 0;
+                instructions[i].cmd = cmd;
             }
-            sscanf(arg[i], "%d", &argv);
-            if(cmd[i][0] == 'l') {//left rotate
-                theta = theta+argv;
-                if(theta >= 360)    theta -= 360;
-            } else if(cmd[i][0] == 'r') {//right rotate
-                theta = theta-argv;
-                if(theta < 0)       theta += 360;
-            } else if(cmd[i][0] == 'f') {//forward move
-                if(!qflag) {
-                    px += argv*cos(theta*pi/180);
-                    py += argv*sin(theta*pi/180);
-                } else {
-                    qx += argv*cos(theta*pi/180);
-                    qy += argv*sin(theta*pi/180);
-                }
-            } else {//back move
-                if(!qflag) {
-                    px -= argv*cos(theta*pi/180);
-                    py -= argv*sin(theta*pi/180);
-                } else {
-                    qx -= argv*cos(theta*pi/180);
-                    qy -= argv*sin(theta*pi/180);
-                }
+            else{
+                instructions[i].arg =  atoi(arg.c_str());
+                instructions[i].cmd = cmd;
             }
         }
-        //printf("%lf %lf %lf %lf\n", px, py, qx, qy);
-        if(qqcmd < 2) {
-            for(j = 0; j < 360; j++) {
-                px = 0, py = 0;
-                theta = 0;
-                for(i = 0; i < n; i++) {
-                    if(arg[i][0] == '?') {
-                        argv = j;
-                    } else  sscanf(arg[i], "%d", &argv);
-                    if(cmd[i][0] == 'l') {//left rotate
-                        theta = theta+argv;
-                        if(theta >= 360)    theta -= 360;
-                    } else if(cmd[i][0] == 'r') {//right rotate
-                        theta = theta-argv;
-                        if(theta < 0)       theta += 360;
-                    } else if(cmd[i][0] == 'f') {//forward move
-                        px += argv*cos(theta*pi/180);
-                        py += argv*sin(theta*pi/180);
-                    } else {//back move
-                        px -= argv*cos(theta*pi/180);
-                        py -= argv*sin(theta*pi/180);
-                    }
-                }
-                if(fabs(px) < 1e-2 && fabs(py) < 1e-2) {
-                    printf("%d\n", j);
+        if(instructions[find_index].cmd.compare("fd") == 0 || instructions[find_index].cmd.compare("bk") == 0) {
+            Point final_position = apply_instructions(instructions,previous_direction,find_index);
+            int direction_sign  = (instructions[find_index].cmd.compare("fd") == 0 ? -1 : 1);
+            cout << fixed << static_cast<int>(final_position.x / previous_direction.x * direction_sign  + EPS) << endl;
+        }
+        else {
+            for(int ang = 0; ang < 360; ang ++ ) {
+                instructions[find_index].arg = ang;
+                Point res_pos = apply_instructions(instructions, previous_direction);
+                if(fabs(res_pos.norm()) < EPS) {
+                    cout << ang << endl;
                     break;
                 }
             }
-        } else {
-            if(qqcmd == 3)
-                printf("%.0lf\n", sqrt(pow(px-qx, 2)+pow(py-qy, 2))+1e-8);
-            else
-                printf("%.0lf\n", sqrt(pow(px+qx, 2)+pow(py+qy, 2))+1e-8);
-
         }
+         
     }
-    return 0;
 }
