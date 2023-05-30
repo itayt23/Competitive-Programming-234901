@@ -1,3 +1,5 @@
 The solution is simply using Dijkstra's algorithm, to find the shortest paths from a given source vertex to all other vertices
 in a weighted graph.
 Finally, as required I outputs the count of shortest paths from the source to the destination vertex.
+
+The overall time complexity of Dijkstra's algorithm is O((V + E) log V) so also this is the time complexity for the code.

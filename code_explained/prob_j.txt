@@ -1,0 +1,25 @@
+In this code, I begin by gathering all the input to determine what the question mark represents: an angle or a distance.
+Throughout the program, I utilize a function called "apply_instructions" that executes all the commands in a given set of instructions,
+one by one, and returns the final position of the robot.
+
+The complexity of the "apply_instructions" function is linear in the number of commands since calculating the next position is straightforward
+using polar to Cartesian coordinate conversion - O(commands_number)
+
+I have consider the robot starts and finishes its patrol at the same spot as the origin (0,0).
+Additionally, the robot initially faces the positive x-axis direction, which I represent as angle 0.
+
+Now there is 2 possible missing arg: distance or angle.
+To determine a missing distance:
+I leverage the fact that the sum of all the movement vectors should be zero, given that the robot ends up at the same spot.
+Therefore, I assume the missing distance as 0 and observe the final position of the robot.
+The missing distance corresponds to the distance between this point and the origin.
+To calculate this distance, I take the absolute value of the result obtained from the "apply_instructions" function.
+In this scenario, the complexity is bounded by the number of steps, which is at most n.
+
+To determine a missing angle:
+I iterate over all possible integer angles (0-359).
+I replace the question mark with the appropriate angle in the instructions and use the "apply_instructions" function to obtain the final position.
+If the robot ends up at the origin, I output the current angle as the correct answer.
+In this case, the complexity is bounded by 360 multiplied by the number of steps, which can be up to 360 * commands.
+
+Overall, considering that the maximum number of commands is 1000, the entire process can have a maximum of 360,000 steps, which is relatively low.

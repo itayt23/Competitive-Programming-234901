@@ -2,3 +2,9 @@ As we learned in class I have tried to use the concept of the convex hull to fin
 to any side of the convex polygon formed by those points.
 Im iterating over all sides of the polygon, computing the maximum distance for each side, and keeps track of the minimum distance encountered.
 The minimum slot size, is the largest gap between the points and any side of the polygon.
+
+The time complexity:
+Reading the number of sides and coordinates of each point takes O(sides) time.
+The find_min_distance function has a loop that iterates over all sides of the polygon, so it runs in O(sides) time.
+Inside the max_dis_to_line function, there is another loop that iterates over all points, so it also runs in O(sides) time.
+Therefore, the overall time complexity of the code is O(sides), where 'sides' represents the number of sides of the convex polygon.

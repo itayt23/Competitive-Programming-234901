@@ -1,21 +1,16 @@
-the requirements given in the problem statement:
+The requirements given in the problem was:
+-Every group of bandits of size at least "m" should be able to open all the locks.
+-No smaller group of bandits should be able to open all the locks.
 
-Every group of bandits of size at least "m" should be able to open all the locks.
-No smaller group of bandits should be able to open all the locks.
-Now, let's break down the reasoning behind using "n choose (m-1)" as the solution:
+To solve those two requirements I calculated n choose (m-1) using the nChoosek function.
+This way I have determine the number of distinct groups that can open the locks while satisfying both requirements.
 
-The number of locks needed corresponds to the number of distinct groups of bandits that can open the locks. Each lock represents a group, and the keys are distributed among the bandits.
+To satisfy the first requirement:
+By choosing "m-1" bandits to receive the keys for each lock, we guarantee that any group of bandits with a size of at least "m"
+will have at least one bandit who possesses a key to each lock.
+This is because selecting "m-1" bandits leaves room for at least one additional bandit in any group of size "m" to have access to the missing keys.
 
-To satisfy the first requirement, every group of bandits of size at least "m" should be able to open all the locks. By choosing "m-1" bandits from the total "n" bandits, we ensure that any group of size "m" will contain at least one bandit who has a key to each lock. This is because selecting "m-1" bandits leaves room for at least one additional bandit in any group of size "m" to have access to the missing key(s).
-
-To satisfy the second requirement, no smaller group of bandits should be able to open all the locks. By choosing "m-1" bandits, we make sure that any group smaller than "m" will not have access to all the keys. This is because a smaller group cannot have all the bandits required to possess the keys to each lock.
-
-By calculating "n choose (m-1)" using the nChoosek function, you determine the number of distinct groups that can open the locks while satisfying both requirements. This value represents the minimum number of locks needed.
-
-
-By choosing "m-1" bandits to receive the keys for each lock, we guarantee that any group of bandits with a size of at least "m" will have at least one bandit who possesses a key 
-to each lock. This is because any group of size "m" will include at least one bandit who was not assigned a key for a particular lock. Therefore, that bandit will not be able to open 
-the lock, ensuring that the lock remains secure unless a group with at least "m" members is formed.
-
-On the other hand, any group with a size less than "m" will not have enough bandits to cover all the locks since they will be missing at least one key. 
-Thus, they will not be able to open all the locks.
+To satisfy the second requirement:
+no smaller group of bandits should be able to open all the locks.
+By choosing "m-1" bandits, we make sure that any group smaller than "m" will not have access to all the keys.
+This is becuase they will be missing at least one key.
