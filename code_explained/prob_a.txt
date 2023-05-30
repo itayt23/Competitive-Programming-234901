@@ -3,3 +3,5 @@ and the piece with the minimum ratio.
 After that Im increaseing the number of cuts for the maximum ratio piece.
 IM doing it to ensures that the ratios get closer to each other, eventually reaching a point where the current ratio is greater than or equal to the threshold ratio.
 The total number of cuts performed is then outputted as the solution to the problem.
+
+Time complexity: O(n^2)

@@ -4,3 +4,8 @@ I set 200 iterates to ensure sufficient precision in finding the minimum distanc
 for the minimum distance that covers all vehicles.
 Eventually I called max_min_func(A, left) for calculates the distance covered by the vehicles at the specific time left,
 which represents the minimum distance they get closest to each other and got the output.
+
+Time complexity:
+The time complexity for initializing A is O(n).
+Ternary_search: O(n + TERNARY_SEARCH_PERCISION)
+Overall:  O(n)

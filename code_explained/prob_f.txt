@@ -14,3 +14,6 @@ To satisfy the second requirement:
 no smaller group of bandits should be able to open all the locks.
 By choosing "m-1" bandits, we make sure that any group smaller than "m" will not have access to all the keys.
 This is becuase they will be missing at least one key.
+
+Time complexity:
+we only computing nChoosek for each testcase so: O(cases * k)

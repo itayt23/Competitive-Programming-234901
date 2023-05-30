@@ -83,7 +83,7 @@ int main()
     while(test_cases--) {
         cin >> commands;
         find_index = 0;
-        Instruction instructions[1005];
+        Instruction instructions[1000];
         instructions->size = commands;
         for (int i = 0; i < commands; i++){
             string arg;

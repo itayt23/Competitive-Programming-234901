@@ -12,3 +12,11 @@ If-else statment for target score until:
 
 If the target score is above 160 than, i check with a while loop all the possible option in a way that im always trying to take as many triple shot, then double and lastly single shots. 
 If a valid combination of shots is not possible to reach the target score, im outputs "impossible". 
+
+Time complexity:
+this is gready algorithm and all the loops are in constant number so they are all : O(1)
+Reading n from the input: O(1)
+Performing different operations based on the value of n: O(1)
+Pushing shots into the out vector: O(1)
+Printing shots from the out vector: O(1)
+Overall, the time complexity of the code is O(1)
